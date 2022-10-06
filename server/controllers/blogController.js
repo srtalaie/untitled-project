@@ -1,5 +1,4 @@
 const jwt = require("jsonwebtoken")
-const blog = require("../models/blog")
 const blogRouter = require("express").Router()
 const Blog = require("../models/blog")
 const User = require("../models/user")
@@ -53,7 +52,7 @@ blogRouter.delete("/:id", async (request, response) => {
 		user.blogs = user.blogs.filter((blog) => {
 			String(blog) !== String(blogToBeDeleted.id)
 		})
-		console.log(user.blogs)
+
 		await user.save()
 
 		response.status(204).end()
@@ -64,7 +63,8 @@ blogRouter.delete("/:id", async (request, response) => {
 
 blogRouter.put("/:id", async (request, response) => {
 	const { userId, title, author, url, likes, comments } = request.body
-	const user = await User.findById(userId)
+	const user = request.user
+
 	const blog = {
 		title: title,
 		author: author,
@@ -73,13 +73,19 @@ blogRouter.put("/:id", async (request, response) => {
 		comments: comments,
 		user: userId,
 	}
-	const updatedBlog = await Blog.findOneAndUpdate(
-		{ _id: request.params.id },
-		blog,
-		{ new: true, runValidators: true, context: "query" }
-	)
 
-	response.json(updatedBlog)
+	if (user.id.toString() === blogToBeUpdated.user._id.toString()) {
+		const updatedBlog = await Blog.findOneAndUpdate(
+			{ _id: request.params.id },
+			blog,
+			{ new: true, runValidators: true, context: "query" }
+		)
+
+		response.json(updatedBlog)
+		response.status(204).end()
+	} else {
+		response.status(401).end()
+	}
 })
 
 module.exports = blogRouter
