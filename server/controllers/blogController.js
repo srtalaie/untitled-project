@@ -8,6 +8,11 @@ blogRouter.get("/", async (request, response) => {
 	response.json(blogs)
 })
 
+blogRouter.get("/:id", async (request, response) => {
+	const blog = await Blog.find({ _id: request.params.id })
+	response.json(blog)
+})
+
 blogRouter.post("/", async (request, response) => {
 	const body = request.body
 
@@ -35,9 +40,33 @@ blogRouter.post("/", async (request, response) => {
 	response.status(201).json(savedBlog)
 })
 
-blogRouter.get("/:id", async (request, response) => {
-	const blog = await Blog.find({ _id: request.params.id })
-	response.json(blog)
+blogRouter.put("/:id", async (request, response) => {
+	const { userId, title, author, url, likes, comments } = request.body
+	const user = request.user
+
+	const blog = {
+		title: title,
+		author: author,
+		url: url,
+		likes: likes,
+		comments: comments,
+		user: userId,
+	}
+
+	const blogToBeUpdated = await Blog.findById({ _id: request.params.id })
+
+	if (user.id.toString() === blogToBeUpdated.user._id.toString()) {
+		const updatedBlog = await Blog.findOneAndUpdate(
+			{ _id: request.params.id },
+			blog,
+			{ new: true, runValidators: true, context: "query" }
+		)
+
+		response.json(updatedBlog)
+		response.status(204).end()
+	} else {
+		response.status(401).end()
+	}
 })
 
 blogRouter.delete("/:id", async (request, response) => {
@@ -55,33 +84,6 @@ blogRouter.delete("/:id", async (request, response) => {
 
 		await user.save()
 
-		response.status(204).end()
-	} else {
-		response.status(401).end()
-	}
-})
-
-blogRouter.put("/:id", async (request, response) => {
-	const { userId, title, author, url, likes, comments } = request.body
-	const user = request.user
-
-	const blog = {
-		title: title,
-		author: author,
-		url: url,
-		likes: likes,
-		comments: comments,
-		user: userId,
-	}
-
-	if (user.id.toString() === blogToBeUpdated.user._id.toString()) {
-		const updatedBlog = await Blog.findOneAndUpdate(
-			{ _id: request.params.id },
-			blog,
-			{ new: true, runValidators: true, context: "query" }
-		)
-
-		response.json(updatedBlog)
 		response.status(204).end()
 	} else {
 		response.status(401).end()
