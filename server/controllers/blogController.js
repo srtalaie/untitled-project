@@ -45,7 +45,6 @@ blogRouter.post('/', async (request, response) => {
 //Update a Blog
 blogRouter.put('/:id', async (request, response) => {
   const { userId, title, author, url, likes, comments } = request.body
-  const { user } = request
 
   const blog = {
     title,
@@ -56,15 +55,16 @@ blogRouter.put('/:id', async (request, response) => {
     user: userId,
   }
 
+  const decodedToken = jwt.verify(request.token, process.env.SECRET)
+
   const blogToBeUpdated = await Blog.findById({ _id: request.params.id })
 
-  if (user.id.toString() === blogToBeUpdated.user._id.toString()) {
+  if (decodedToken.id.toString() === blogToBeUpdated.user._id.toString()) {
     const updatedBlog = await Blog.findOneAndUpdate(
       { _id: request.params.id },
       blog,
       { new: true, runValidators: true, context: 'query' }
     )
-
     response.json(updatedBlog)
     response.status(204).end()
   } else {
@@ -84,9 +84,9 @@ blogRouter.delete('/:id', async (request, response) => {
     })
     response.send(deletedBlog)
 
-    user.blogs = user.blogs.filter((blog) => {
-      String(blog) !== String(blogToBeDeleted.id)
-    })
+    user.blogs = user.blogs.filter(
+      (blog) => String(blog) !== blogToBeDeleted.id
+    )
 
     await user.save()
 
