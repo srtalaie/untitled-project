@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react"
+
 import Blog from "./components/Blog"
-import { getAll, setToken } from "./services/blogs"
+import BlogForm from "./components/BlogForm"
+
+import { create, getAll, setToken } from "./services/blogs"
 import login from "./services/login"
 
 const App = () => {
@@ -12,7 +15,7 @@ const App = () => {
 
 	useEffect(() => {
 		getAll().then((blogs) => setBlogs(blogs))
-	}, [])
+	}, [blogs])
 
 	useEffect(() => {
 		const loggedInUserJSON = window.localStorage.getItem("loggedInUser")
@@ -53,6 +56,23 @@ const App = () => {
 		setToken(null)
 	}
 
+	const handleCreateBlog = async (newBlog) => {
+		try {
+			await create(newBlog)
+			setMessage(
+				`A new blog was created: ${newBlog.title} by ${newBlog.author}`
+			)
+			setTimeout(() => {
+				setMessage(null)
+			}, 5000)
+		} catch (exception) {
+			setMessage("Something went wrong")
+			setTimeout(() => {
+				setMessage(null)
+			}, 5000)
+		}
+	}
+
 	return (
 		<div>
 			<div>
@@ -89,6 +109,7 @@ const App = () => {
 					<p>
 						{user.name} logged in <button onClick={handleLogOut}>logout</button>
 					</p>
+					<BlogForm handleCreateBlog={handleCreateBlog} />
 					{blogs.map((blog) => (
 						<Blog key={blog.id} blog={blog} />
 					))}
