@@ -8,14 +8,23 @@ const Blog = ({ blog }) => {
 	}
 	return (
 		<div>
-			{blog.title} - {blog.author}{" "}
+			{blog.title} - {blog.author}
 			<button id="view-hide-btn" onClick={handleVisibility}>
 				{isVisible ? "hide" : "view"}
 			</button>
 			<div id="details">
 				{isVisible ? (
 					<>
-						<div className="blog-link">link: {blog.url}</div>
+						<div className="blog-link">
+							link:
+							<a
+								href={`http://${encodeURI(blog.url)}`}
+								target="_blank"
+								rel="noreferrer"
+							>
+								{blog.url}
+							</a>
+						</div>
 						<div className="blog-likes">likes: {blog.likes}</div>
 					</>
 				) : (
