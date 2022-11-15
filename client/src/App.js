@@ -5,7 +5,7 @@ import BlogForm from "./components/BlogForm"
 import LoginForm from "./components/LoginForm"
 import Togglable from "./components/Toggable"
 
-import { create, getAll, setToken } from "./services/blogs"
+import { create, getAll, setToken, update } from "./services/blogs"
 import login from "./services/login"
 
 const App = () => {
@@ -69,6 +69,21 @@ const App = () => {
 		}
 	}
 
+	const handleUpdate = async (blogID, updatedBlog) => {
+		try {
+			await update(blogID, updatedBlog)
+			setMessage("Blog successfully updated")
+			setTimeout(() => {
+				setMessage(null)
+			}, 5000)
+		} catch (exception) {
+			setMessage("Something went wrong")
+			setTimeout(() => {
+				setMessage(null)
+			}, 5000)
+		}
+	}
+
 	return (
 		<div>
 			<h1>Blogger</h1>
@@ -89,7 +104,7 @@ const App = () => {
 						<BlogForm handleCreateBlog={handleCreateBlog} />
 					</Togglable>
 					{blogs.map((blog) => (
-						<Blog key={blog.id} blog={blog} />
+						<Blog key={blog.id} blog={blog} handleUpdate={handleUpdate} />
 					))}
 				</div>
 			)}
