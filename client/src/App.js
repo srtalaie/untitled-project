@@ -5,7 +5,7 @@ import BlogForm from "./components/BlogForm"
 import LoginForm from "./components/LoginForm"
 import Togglable from "./components/Toggable"
 
-import { create, getAll, setToken, update } from "./services/blogs"
+import { create, getAll, remove, setToken, update } from "./services/blogs"
 import login from "./services/login"
 
 const App = () => {
@@ -15,8 +15,13 @@ const App = () => {
 
 	const blogFormRef = useRef()
 
+	const sortBlogs = (blogs) => {
+		blogs = blogs.sort((a, b) => b.likes - a.likes)
+		return blogs
+	}
+
 	useEffect(() => {
-		getAll().then((blogs) => setBlogs(blogs))
+		getAll().then((blogs) => setBlogs(sortBlogs(blogs)))
 	}, [blogs])
 
 	useEffect(() => {
@@ -84,6 +89,21 @@ const App = () => {
 		}
 	}
 
+	const handleRemove = async (blogID) => {
+		try {
+			await remove(blogID)
+			setMessage("Blog successfully deleted")
+			setTimeout(() => {
+				setMessage(null)
+			}, 5000)
+		} catch (exception) {
+			setMessage("Something went wrong")
+			setTimeout(() => {
+				setMessage(null)
+			}, 5000)
+		}
+	}
+
 	return (
 		<div>
 			<h1>Blogger</h1>
@@ -104,7 +124,12 @@ const App = () => {
 						<BlogForm handleCreateBlog={handleCreateBlog} />
 					</Togglable>
 					{blogs.map((blog) => (
-						<Blog key={blog.id} blog={blog} handleUpdate={handleUpdate} />
+						<Blog
+							key={blog.id}
+							blog={blog}
+							handleUpdate={handleUpdate}
+							handleRemove={handleRemove}
+						/>
 					))}
 				</div>
 			)}
