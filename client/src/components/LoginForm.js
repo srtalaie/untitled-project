@@ -1,49 +1,55 @@
-import { useState } from "react"
+import { useState } from 'react'
+
+import PropTypes from 'prop-types'
 
 const LoginForm = ({ handleLogin }) => {
-	const [username, setUsername] = useState("")
-	const [password, setPassword] = useState("")
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
 
-	const onLogin = (event) => {
-		event.preventDefault()
+  LoginForm.propTypes = {
+    handleLogin: PropTypes.func.isRequired,
+  }
 
-		const user = {
-			username,
-			password,
-		}
+  const onLogin = (event) => {
+    event.preventDefault()
 
-		handleLogin(user)
+    const user = {
+      username,
+      password,
+    }
 
-		setUsername("")
-		setPassword("")
-	}
+    handleLogin(user)
 
-	return (
-		<div>
-			<h2>Login</h2>
-			<form onSubmit={onLogin}>
-				<div>
+    setUsername('')
+    setPassword('')
+  }
+
+  return (
+    <div>
+      <h2>Login</h2>
+      <form onSubmit={onLogin}>
+        <div>
 					username
-					<input
-						type="text"
-						value={username}
-						name="Username"
-						onChange={({ target }) => setUsername(target.value)}
-					/>
-				</div>
-				<div>
+          <input
+            type="text"
+            value={username}
+            name="Username"
+            onChange={({ target }) => setUsername(target.value)}
+          />
+        </div>
+        <div>
 					password
-					<input
-						type="password"
-						value={password}
-						name="Password"
-						onChange={({ target }) => setPassword(target.value)}
-					/>
-				</div>
-				<button type="submit">login</button>
-			</form>
-		</div>
-	)
+          <input
+            type="password"
+            value={password}
+            name="Password"
+            onChange={({ target }) => setPassword(target.value)}
+          />
+        </div>
+        <button type="submit">login</button>
+      </form>
+    </div>
+  )
 }
 
 export default LoginForm
