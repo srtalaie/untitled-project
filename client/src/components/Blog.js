@@ -13,7 +13,7 @@ const Blog = ({ blog, handleUpdate }) => {
 			likes: (blog.likes += 1),
 		}
 
-		handleUpdate("gay", updatedBlog)
+		handleUpdate(updatedBlog._id, updatedBlog)
 	}
 
 	return (
