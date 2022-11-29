@@ -42,7 +42,10 @@ const Blog = ({ blog, handleUpdate, handleRemove }) => {
               </a>
             </div>
             <div className="blog-likes">
-              likes: {blog.likes} <button onClick={handleLike}>+Like</button>
+              likes: {blog.likes}
+              <button className="like-btn" onClick={handleLike}>
+                +Like
+              </button>
             </div>
             <button onClick={handleDelete}>delete</button>
           </>
