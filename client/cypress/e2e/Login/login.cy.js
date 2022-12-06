@@ -1,13 +1,12 @@
 describe('Login E2E', () => {
   beforeEach(function () {
     cy.request('POST', 'http://localhost:3003/api/testing/reset')
-    const user = {
+    cy.createUser({
       name: 'Test Test',
       email: 'test@test.com',
       username: Cypress.env('username'),
       password: Cypress.env('password'),
-    }
-    cy.request('POST', 'http://localhost:3003/api/users', user)
+    })
     cy.visit('http://localhost:3000')
   })
 
