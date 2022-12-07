@@ -108,7 +108,7 @@ const App = () => {
     <div>
       <h1>Blogger</h1>
       <div>
-        <p>{message}</p>
+        <p id="message">{message}</p>
       </div>
       {user === null ? (
         <Togglable buttonLabel="login">

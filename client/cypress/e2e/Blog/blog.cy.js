@@ -54,4 +54,16 @@ describe('Login E2E', () => {
 
     cy.get('.blog-likes').contains('1')
   })
+
+  it('user can delete a blog', () => {
+    cy.contains('Test Blog - Test Author')
+    cy.get('#view-hide-btn').contains('view').click()
+    cy.get('button').contains('delete').click()
+
+    const deleteAlert = cy.stub().as('deleteAlert')
+    cy.on('window:alert', deleteAlert)
+    cy.get('button').contains('OK')
+
+    cy.get('#message').contains('Blog successfully deleted')
+  })
 })
