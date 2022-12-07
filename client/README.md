@@ -49,6 +49,10 @@ Runs linter. To fix run `eslint -- --fix`.
 
 Runs cypress.
 
+### `npm run test:e2e`
+
+Runs cypress in command line.
+
 ## Learn More
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
