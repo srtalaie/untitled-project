@@ -44,4 +44,14 @@ describe('Login E2E', () => {
 
     cy.contains('Test Blog #2 - Tester Testington')
   })
+
+  it('user can like a blog', () => {
+    cy.get('#view-hide-btn').contains('view').click()
+
+    cy.get('.blog-likes').contains('0')
+
+    cy.get('button').contains('+Like').click()
+
+    cy.get('.blog-likes').contains('1')
+  })
 })
