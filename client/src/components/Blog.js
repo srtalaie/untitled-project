@@ -23,7 +23,7 @@ const Blog = ({ blog, handleUpdate, handleRemove }) => {
   }
 
   return (
-    <div>
+    <div className="blog">
       {blog.title} - {blog.author}
       <button id="view-hide-btn" onClick={handleVisibility}>
         {isVisible ? 'hide' : 'view'}

@@ -18,6 +18,7 @@ describe('Login E2E', () => {
       title: 'Test Blog',
       author: 'Test Author',
       url: 'www.test.com',
+      likes: 0,
     })
   })
 
@@ -60,10 +61,33 @@ describe('Login E2E', () => {
     cy.get('#view-hide-btn').contains('view').click()
     cy.get('button').contains('delete').click()
 
-    const deleteAlert = cy.stub().as('deleteAlert')
+    const deleteAlert = cy.stub()
     cy.on('window:alert', deleteAlert)
-    cy.get('button').contains('OK')
-
     cy.get('#message').contains('Blog successfully deleted')
+  })
+
+  it('blog list ordered by most liked', () => {
+    cy.createBlog({
+      title: 'Blog with Most',
+      author: 'Blog Author',
+      url: 'www.blog.com',
+      likes: 100,
+    })
+    cy.createBlog({
+      title: 'Blog',
+      author: 'Blog Author',
+      url: 'www.blog.com',
+      likes: 99,
+    })
+    cy.createBlog({
+      title: 'Blog with Least',
+      author: 'Blog Author',
+      url: 'www.blog.com',
+      likes: 1,
+    })
+
+    cy.get('.blog').eq(0).should('contain', 'Blog with Most')
+    cy.get('.blog').eq(1).should('contain', 'Blog')
+    cy.get('.blog').eq(2).should('contain', 'Blog with Least')
   })
 })
