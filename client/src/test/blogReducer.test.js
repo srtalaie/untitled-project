@@ -3,11 +3,11 @@ import deepFreeze from 'deep-freeze'
 import blogReducer from '../reducers/blogReducer'
 
 describe('blog redux tests', () => {
-  test('returns new state with action NEW_NOTE', () => {
+  test('returns new state with action `createBlog`', () => {
     const state = []
     const action = {
-      type: 'NEW_BLOG',
-      data: {
+      type: 'blogs/createBlog',
+      payload: {
         title: 'Test Blog',
         author: 'Test Author',
         url: 'www.test.com',
@@ -18,10 +18,10 @@ describe('blog redux tests', () => {
     const newState = blogReducer(state, action)
 
     expect(newState).toHaveLength(1)
-    expect(newState).toContainEqual(action.data)
+    expect(newState[0]).toEqual(expect.objectContaining(action.payload))
   })
 
-  test('returns new state with action LIKE_BLOG', () => {
+  test('returns new state with action `likeBlog`', () => {
     const state = [
       {
         id: 1,
@@ -40,12 +40,13 @@ describe('blog redux tests', () => {
     ]
 
     const action = {
-      type: 'LIKE_BLOG',
-      data: {
+      type: 'blogs/likeBlog',
+      payload: {
         id: 1,
       },
     }
 
+    deepFreeze(state)
     const newState = blogReducer(state, action)
 
     expect(newState).toHaveLength(2)

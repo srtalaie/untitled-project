@@ -1,20 +1,33 @@
-/* eslint-disable indent */
-const blogReducer = (state = [], action) => {
-  switch (action.type) {
-    case 'NEW_BLOG':
-      return [...state, action.data]
-    case 'LIKE_BLOG': {
-      const id = action.data.id
+import { createSlice } from '@reduxjs/toolkit'
+
+const generateId = () => Number((Math.random() * 1000000).toFixed(0))
+
+const blogSlice = createSlice({
+  name: 'blogs',
+  initialState: [],
+  reducers: {
+    createBlog(state, action) {
+      const blog = action.payload
+      state.push({
+        title: blog.title,
+        author: blog.author,
+        url: blog.url,
+        id: generateId(),
+        likes: 0,
+      })
+    },
+    likeBlog(state, action) {
+      const id = action.payload.id
       const blogToChange = state.find((blog) => blog.id === id)
       const likedBlog = {
         ...blogToChange,
         likes: (blogToChange.likes += 1),
       }
       return state.map((blog) => (blog.id !== id ? blog : likedBlog))
-    }
-    default:
-      return state
-  }
-}
+    },
+  },
+})
 
-export default blogReducer
+export const { createBlog, likeBlog } = blogSlice.actions
+
+export default blogSlice.reducer
