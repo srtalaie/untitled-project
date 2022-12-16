@@ -23,7 +23,8 @@ const blogSlice = createSlice({
         ...blogToChange,
         likes: (blogToChange.likes += 1),
       }
-      return state.map((blog) => (blog.id !== id ? blog : likedBlog))
+      state.map((blog) => (blog.id !== id ? blog : likedBlog))
+      return state
     },
   },
 })

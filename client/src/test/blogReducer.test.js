@@ -50,8 +50,6 @@ describe('blog redux tests', () => {
     const newState = blogReducer(state, action)
 
     expect(newState).toHaveLength(2)
-    expect(newState).toContainEqual(state[0])
-
     expect(newState).toContainEqual({
       id: 1,
       title: 'Blog 1',
