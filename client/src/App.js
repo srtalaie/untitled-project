@@ -5,24 +5,24 @@ import BlogForm from './components/BlogForm'
 import LoginForm from './components/LoginForm'
 import Togglable from './components/Toggable'
 
+import { useDispatch, useSelector } from 'react-redux'
+import { setBlogs } from './reducers/blogReducer'
 import { create, getAll, remove, setToken, update } from './services/blogs'
 import login from './services/login'
 
 const App = () => {
-  const [blogs, setBlogs] = useState([])
   const [user, setUser] = useState(null)
   const [message, setMessage] = useState('')
 
+  const dispatch = useDispatch()
+
+  const blogs = useSelector((state) => state.blogs.slice().sort((a, b) => (b.likes - a.likes)))
+
   const blogFormRef = useRef()
 
-  const sortBlogs = (blogs) => {
-    blogs = blogs.sort((a, b) => b.likes - a.likes)
-    return blogs
-  }
-
   useEffect(() => {
-    getAll().then((blogs) => setBlogs(sortBlogs(blogs)))
-  }, [blogs])
+    getAll().then((blogs) => dispatch(setBlogs(blogs)))
+  }, [dispatch])
 
   useEffect(() => {
     const loggedInUserJSON = window.localStorage.getItem('loggedInUser')
