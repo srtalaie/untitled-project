@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { create, getAll } from '../services/blogs'
 
 const generateId = () => Number((Math.random() * 1000000).toFixed(0))
 
@@ -35,6 +36,20 @@ const blogSlice = createSlice({
   },
 })
 
-export const { createBlog, likeBlog, appendBlog, setBlogs  } = blogSlice.actions
+export const { likeBlog, appendBlog, setBlogs  } = blogSlice.actions
+
+export const initializeBlogs = () => {
+  return async dispatch => {
+    const blogs = await getAll()
+    dispatch(setBlogs(blogs))
+  }
+}
+
+export const createBlog = (blog) => {
+  return async dispatch => {
+    const newBlog = await create(blog)
+    dispatch(appendBlog(newBlog))
+  }
+}
 
 export default blogSlice.reducer

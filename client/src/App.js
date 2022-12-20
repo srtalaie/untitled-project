@@ -6,8 +6,8 @@ import LoginForm from './components/LoginForm'
 import Togglable from './components/Toggable'
 
 import { useDispatch, useSelector } from 'react-redux'
-import { setBlogs } from './reducers/blogReducer'
-import { create, getAll, remove, setToken, update } from './services/blogs'
+import { initializeBlogs } from './reducers/blogReducer'
+import { remove, setToken, update } from './services/blogs'
 import login from './services/login'
 
 const App = () => {
@@ -21,7 +21,7 @@ const App = () => {
   const blogFormRef = useRef()
 
   useEffect(() => {
-    getAll().then((blogs) => dispatch(setBlogs(blogs)))
+    dispatch(initializeBlogs())
   }, [dispatch])
 
   useEffect(() => {
@@ -56,23 +56,23 @@ const App = () => {
     setToken(null)
   }
 
-  const handleCreateBlog = async (newBlog) => {
-    blogFormRef.current.toggleVisibility()
-    try {
-      await create(newBlog)
-      setMessage(
-        `A new blog was created: ${newBlog.title} by ${newBlog.author}`
-      )
-      setTimeout(() => {
-        setMessage(null)
-      }, 5000)
-    } catch (exception) {
-      setMessage('Something went wrong')
-      setTimeout(() => {
-        setMessage(null)
-      }, 5000)
-    }
-  }
+  // const handleCreateBlog = async (newBlog) => {
+  //   blogFormRef.current.toggleVisibility()
+  //   try {
+  //     await create(newBlog)
+  //     setMessage(
+  //       `A new blog was created: ${newBlog.title} by ${newBlog.author}`
+  //     )
+  //     setTimeout(() => {
+  //       setMessage(null)
+  //     }, 5000)
+  //   } catch (exception) {
+  //     setMessage('Something went wrong')
+  //     setTimeout(() => {
+  //       setMessage(null)
+  //     }, 5000)
+  //   }
+  // }
 
   const handleUpdate = async (blogID, updatedBlog) => {
     try {
@@ -121,7 +121,7 @@ const App = () => {
             {user.name} logged in <button onClick={handleLogOut}>logout</button>
           </p>
           <Togglable buttonLabel="new blog" id="new-blog-btn" ref={blogFormRef}>
-            <BlogForm handleCreateBlog={handleCreateBlog} />
+            <BlogForm />
           </Togglable>
           {blogs.map((blog) => (
             <Blog
