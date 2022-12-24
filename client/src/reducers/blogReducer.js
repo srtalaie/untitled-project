@@ -1,8 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { create, getAll } from '../services/blogs'
 
-const generateId = () => Number((Math.random() * 1000000).toFixed(0))
-
 const blogSlice = createSlice({
   name: 'blogs',
   initialState: [],
@@ -13,7 +11,6 @@ const blogSlice = createSlice({
         title: blog.title,
         author: blog.author,
         url: blog.url,
-        id: generateId(),
         likes: 0,
       })
     },

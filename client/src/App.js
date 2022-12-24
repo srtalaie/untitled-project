@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react'
 import Blog from './components/Blog'
 import BlogForm from './components/BlogForm'
 import LoginForm from './components/LoginForm'
+import Notification from './components/Notification'
 import Togglable from './components/Toggable'
 
 import { useDispatch, useSelector } from 'react-redux'
@@ -12,7 +13,6 @@ import login from './services/login'
 
 const App = () => {
   const [user, setUser] = useState(null)
-  const [message, setMessage] = useState('')
 
   const dispatch = useDispatch()
 
@@ -43,10 +43,6 @@ const App = () => {
       setUser(loggedInUser)
     } catch (error) {
       console.log(error)
-      setMessage(error.response.data.message)
-      setTimeout(() => {
-        setMessage(null)
-      }, 5000)
     }
   }
 
@@ -77,39 +73,23 @@ const App = () => {
   const handleUpdate = async (blogID, updatedBlog) => {
     try {
       await update(blogID, updatedBlog)
-      setMessage('Blog successfully updated')
-      setTimeout(() => {
-        setMessage(null)
-      }, 5000)
     } catch (exception) {
-      setMessage('Something went wrong')
-      setTimeout(() => {
-        setMessage(null)
-      }, 5000)
+      console.log(exception)
     }
   }
 
   const handleRemove = async (blogID) => {
     try {
       await remove(blogID)
-      setMessage('Blog successfully deleted')
-      setTimeout(() => {
-        setMessage(null)
-      }, 5000)
     } catch (exception) {
-      setMessage('Something went wrong')
-      setTimeout(() => {
-        setMessage(null)
-      }, 5000)
+      console.log(exception)
     }
   }
 
   return (
     <div>
       <h1>Blogger</h1>
-      <div>
-        <p id="message">{message}</p>
-      </div>
+      <Notification />
       {user === null ? (
         <Togglable buttonLabel="login">
           <LoginForm handleLogin={handleLogin} />
