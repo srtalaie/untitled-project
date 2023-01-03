@@ -8,7 +8,7 @@ import Togglable from './components/Toggable'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { initializeBlogs } from './reducers/blogReducer'
-import { setToken, update } from './services/blogs'
+import { setToken } from './services/blogs'
 import login from './services/login'
 
 const App = () => {
@@ -52,40 +52,6 @@ const App = () => {
     setToken(null)
   }
 
-  // const handleCreateBlog = async (newBlog) => {
-  //   blogFormRef.current.toggleVisibility()
-  //   try {
-  //     await create(newBlog)
-  //     setMessage(
-  //       `A new blog was created: ${newBlog.title} by ${newBlog.author}`
-  //     )
-  //     setTimeout(() => {
-  //       setMessage(null)
-  //     }, 5000)
-  //   } catch (exception) {
-  //     setMessage('Something went wrong')
-  //     setTimeout(() => {
-  //       setMessage(null)
-  //     }, 5000)
-  //   }
-  // }
-
-  const handleUpdate = async (blogID, updatedBlog) => {
-    try {
-      await update(blogID, updatedBlog)
-    } catch (exception) {
-      console.log(exception)
-    }
-  }
-
-  // const handleRemove = async (blogID) => {
-  //   try {
-  //     await remove(blogID)
-  //   } catch (exception) {
-  //     console.log(exception)
-  //   }
-  // }
-
   return (
     <div>
       <h1>Blogger</h1>
@@ -107,7 +73,6 @@ const App = () => {
             <Blog
               key={blog._id}
               blog={blog}
-              handleUpdate={handleUpdate}
             />
           ))}
         </div>

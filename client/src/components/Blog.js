@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 
-import { removeBlog } from '../reducers/blogReducer'
+import { deleteABlog, updateABlog } from '../reducers/blogReducer'
 import { setNotification } from '../reducers/notificationReducer'
 
-const Blog = ({ blog, handleUpdate }) => {
+const Blog = ({ blog }) => {
   const [isVisible, setIsVisible] = useState(false)
 
   const dispatch = useDispatch()
@@ -14,18 +14,18 @@ const Blog = ({ blog, handleUpdate }) => {
   }
 
   const handleLike = () => {
-    const updatedBlog = {
-      ...blog,
-      likes: (blog.likes += 1),
+    try{
+      dispatch(updateABlog(blog._id, { ...blog, likes: blog.likes + 1 }))
+      dispatch(setNotification(`You liked: ${blog.title} by ${blog.author}`, 3000))
+    } catch (exception) {
+      dispatch(setNotification('Something went wrong'))
     }
-
-    handleUpdate(updatedBlog._id, updatedBlog)
   }
 
   const handleDelete = () => {
     if (window.confirm(`Really delete ${blog.title} by ${blog.author}?`)) {
       try{
-        dispatch(removeBlog(blog._id))
+        dispatch(deleteABlog(blog._id))
         dispatch(setNotification(`${blog.title} by ${blog.author} was deleted`, 3000))
       } catch (exception) {
         dispatch(setNotification('Something went wrong'))

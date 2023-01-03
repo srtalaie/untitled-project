@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { create, getAll } from '../services/blogs'
+import { create, getAll, remove, update } from '../services/blogs'
 
 const blogSlice = createSlice({
   name: 'blogs',
@@ -14,15 +14,10 @@ const blogSlice = createSlice({
         likes: 0,
       })
     },
-    likeBlog(state, action) {
-      const id = action.payload.id
-      const blogToChange = state.find((blog) => blog.id === id)
-      const likedBlog = {
-        ...blogToChange,
-        likes: (blogToChange.likes += 1),
-      }
-      state.map((blog) => (blog.id !== id ? blog : likedBlog))
-      return state
+    updateBlog(state, action) {
+      const updatedBlog = action.payload
+      const id = updatedBlog._id
+      return state.map(blog => blog._id !== id ? blog : updatedBlog)
     },
     appendBlog(state, action) {
       state.push(action.payload)
@@ -37,7 +32,7 @@ const blogSlice = createSlice({
   },
 })
 
-export const { likeBlog, appendBlog, setBlogs, removeBlog  } = blogSlice.actions
+export const { updateBlog, appendBlog, setBlogs, removeBlog  } = blogSlice.actions
 
 export const initializeBlogs = () => {
   return async dispatch => {
@@ -46,16 +41,23 @@ export const initializeBlogs = () => {
   }
 }
 
-export const createBlog = (blog) => {
+export const createABlog = (blog) => {
   return async dispatch => {
     const newBlog = await create(blog)
     dispatch(appendBlog(newBlog))
   }
 }
 
-export const deleteBlog = (id) => {
+export const updateABlog = (id, blog) => {
   return async dispatch => {
-    await deleteBlog(id)
+    const updatedBlog = await update(id, blog)
+    dispatch(updateBlog(updatedBlog))
+  }
+}
+
+export const deleteABlog = (id) => {
+  return async dispatch => {
+    await remove(id)
     dispatch(removeBlog(id))
   }
 }

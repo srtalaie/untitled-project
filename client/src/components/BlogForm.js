@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 
-import { createBlog } from '../reducers/blogReducer'
+import { createABlog } from '../reducers/blogReducer'
 import { setNotification } from '../reducers/notificationReducer'
 
 
@@ -22,7 +22,7 @@ const BlogForm = () => {
     }
 
     try {
-      dispatch(createBlog(newBlog))
+      dispatch(createABlog(newBlog))
       dispatch(setNotification(`A new blog was created: ${newBlog.title} by ${newBlog.author}`, 3000))
     } catch (exception) {
       dispatch(setNotification('Something went wrong'))
