@@ -1,7 +1,13 @@
 import { useState } from 'react'
+import { useDispatch } from 'react-redux'
 
-const Blog = ({ blog, handleUpdate, handleRemove }) => {
+import { removeBlog } from '../reducers/blogReducer'
+import { setNotification } from '../reducers/notificationReducer'
+
+const Blog = ({ blog, handleUpdate }) => {
   const [isVisible, setIsVisible] = useState(false)
+
+  const dispatch = useDispatch()
 
   const handleVisibility = () => {
     setIsVisible(!isVisible)
@@ -18,7 +24,12 @@ const Blog = ({ blog, handleUpdate, handleRemove }) => {
 
   const handleDelete = () => {
     if (window.confirm(`Really delete ${blog.title} by ${blog.author}?`)) {
-      handleRemove(blog._id)
+      try{
+        dispatch(removeBlog(blog._id))
+        dispatch(setNotification(`${blog.title} by ${blog.author} was deleted`, 3000))
+      } catch (exception) {
+        dispatch(setNotification('Something went wrong'))
+      }
     }
   }
 

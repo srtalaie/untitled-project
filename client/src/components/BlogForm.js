@@ -21,8 +21,6 @@ const BlogForm = () => {
       url: url,
     }
 
-    console.log(newBlog)
-
     try {
       dispatch(createBlog(newBlog))
       dispatch(setNotification(`A new blog was created: ${newBlog.title} by ${newBlog.author}`, 3000))

@@ -8,7 +8,7 @@ import Togglable from './components/Toggable'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { initializeBlogs } from './reducers/blogReducer'
-import { remove, setToken, update } from './services/blogs'
+import { setToken, update } from './services/blogs'
 import login from './services/login'
 
 const App = () => {
@@ -78,13 +78,13 @@ const App = () => {
     }
   }
 
-  const handleRemove = async (blogID) => {
-    try {
-      await remove(blogID)
-    } catch (exception) {
-      console.log(exception)
-    }
-  }
+  // const handleRemove = async (blogID) => {
+  //   try {
+  //     await remove(blogID)
+  //   } catch (exception) {
+  //     console.log(exception)
+  //   }
+  // }
 
   return (
     <div>
@@ -108,7 +108,6 @@ const App = () => {
               key={blog._id}
               blog={blog}
               handleUpdate={handleUpdate}
-              handleRemove={handleRemove}
             />
           ))}
         </div>
