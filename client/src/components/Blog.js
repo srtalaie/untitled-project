@@ -1,11 +1,13 @@
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 
-import { deleteABlog, updateABlog } from '../reducers/blogReducer'
+import { addAComment, deleteABlog, updateABlog } from '../reducers/blogReducer'
 import { setNotification } from '../reducers/notificationReducer'
 
 const Blog = ({ blog }) => {
   const [isVisible, setIsVisible] = useState(false)
+  const [comment, setComment] = useState('')
+  const [commentDate, setCommentDate] = useState(null)
 
   const dispatch = useDispatch()
 
@@ -33,6 +35,20 @@ const Blog = ({ blog }) => {
     }
   }
 
+  const handleChange = (event) => {
+    setComment(event.target.value)
+  }
+
+  const handleComment = async () => {
+    dispatch(addAComment(blog._id, comment))
+    setCommentDate(new Date())
+    setComment('')
+  }
+
+  if (!blog) {
+    return null
+  }
+
   return (
     <div className="blog">
       {blog.title} - {blog.author}
@@ -57,6 +73,19 @@ const Blog = ({ blog }) => {
               <button className="like-btn" onClick={handleLike}>
                 +Like
               </button>
+            </div>
+            <div>
+              <h3>Comments</h3>
+              <input type="text" name="comment" value={comment} onChange={handleChange}></input>
+              <button onClick={handleComment}>Add Comment</button>
+              <div>
+                {blog.comments.length === 0 ?
+                  <div>No comments yet</div> :
+                  <ul>
+                    {blog.comments.map(comment => <li key={commentDate}>{comment} - {commentDate.toLocaleString()}</li>)}
+                  </ul>
+                }
+              </div>
             </div>
             <button onClick={handleDelete}>delete</button>
           </>
