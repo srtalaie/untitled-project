@@ -46,10 +46,11 @@ const addComment = async (id, comment) => {
     date: Date.now()
   }
   const commentedBlog = await axios.get(`${baseUrl}/${id}`)
+  console.log(commentedBlog)
   const comments = commentedBlog.data[0].comments
   comments.push(commentObj)
   const blogWithComment = { ...commentedBlog.data[0],
-    comments: comments
+    comments: [...comments]
   }
   const response = await axios.put(`${baseUrl}/${id}`, blogWithComment, config)
   return response.data

@@ -75,7 +75,10 @@ const Blog = () => {
             {blog.comments.length === 0 ?
               <div>No comments yet</div> :
               <ul>
-                {blog.comments.map(comment => <li key={`${comment._id}`}>{comment.content} - {comment.date.toLocaleString()}</li>)}
+                {blog.comments.map(comment => <li key={`${comment._id}`}>{comment.content} - {new Date(comment.date).toLocaleString('en-US', {
+                  dateStyle: 'short',
+                  timeStyle: 'short',
+                })}</li>)}
               </ul>
             }
           </div>

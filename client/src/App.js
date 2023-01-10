@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes, useNavigate } from 'react-router-dom'
 
 import Blog from './components/Blog'
 import BlogForm from './components/BlogForm'
@@ -18,6 +18,7 @@ const App = () => {
   const [user, setUser] = useState(null)
 
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const blogFormRef = useRef()
 
   useEffect(() => {
@@ -41,6 +42,7 @@ const App = () => {
 
       setToken(loggedInUser.token)
       setUser(loggedInUser)
+      navigate('/')
     } catch (error) {
       console.log(error)
     }
