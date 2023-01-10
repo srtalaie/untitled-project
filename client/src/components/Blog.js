@@ -1,19 +1,18 @@
 import { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { useParams } from 'react-router-dom'
 
 import { addAComment, deleteABlog, updateABlog } from '../reducers/blogReducer'
 import { setNotification } from '../reducers/notificationReducer'
 
-const Blog = ({ blog }) => {
-  const [isVisible, setIsVisible] = useState(false)
+const Blog = () => {
   const [comment, setComment] = useState('')
-  const [commentDate, setCommentDate] = useState(null)
 
   const dispatch = useDispatch()
 
-  const handleVisibility = () => {
-    setIsVisible(!isVisible)
-  }
+  const { id } = useParams()
+
+  const blog = useSelector((state) => state.blogs.find(blog => blog._id === id))
 
   const handleLike = () => {
     try{
@@ -41,7 +40,6 @@ const Blog = ({ blog }) => {
 
   const handleComment = async () => {
     dispatch(addAComment(blog._id, comment))
-    setCommentDate(new Date())
     setComment('')
   }
 
@@ -52,46 +50,37 @@ const Blog = ({ blog }) => {
   return (
     <div className="blog">
       {blog.title} - {blog.author}
-      <button id="view-hide-btn" onClick={handleVisibility}>
-        {isVisible ? 'hide' : 'view'}
-      </button>
       <div id="details">
-        {isVisible ? (
-          <>
-            <div className="blog-link">
+        <div className="blog-link">
               link:
-              <a
-                href={`http://${encodeURI(blog.url)}`}
-                target="_blank"
-                rel="noreferrer"
-              >
-                {blog.url}
-              </a>
-            </div>
-            <div className="blog-likes">
+          <a
+            href={`http://${encodeURI(blog.url)}`}
+            target="_blank"
+            rel="noreferrer"
+          >
+            {blog.url}
+          </a>
+        </div>
+        <div className="blog-likes">
               likes: {blog.likes}
-              <button className="like-btn" onClick={handleLike}>
+          <button className="like-btn" onClick={handleLike}>
                 +Like
-              </button>
-            </div>
-            <div>
-              <h3>Comments</h3>
-              <input type="text" name="comment" value={comment} onChange={handleChange}></input>
-              <button onClick={handleComment}>Add Comment</button>
-              <div>
-                {blog.comments.length === 0 ?
-                  <div>No comments yet</div> :
-                  <ul>
-                    {blog.comments.map(comment => <li key={commentDate}>{comment} - {commentDate.toLocaleString()}</li>)}
-                  </ul>
-                }
-              </div>
-            </div>
-            <button onClick={handleDelete}>delete</button>
-          </>
-        ) : (
-          <></>
-        )}
+          </button>
+        </div>
+        <div>
+          <h3>Comments</h3>
+          <input type="text" name="comment" value={comment} onChange={handleChange}></input>
+          <button onClick={handleComment}>Add Comment</button>
+          <div>
+            {blog.comments.length === 0 ?
+              <div>No comments yet</div> :
+              <ul>
+                {blog.comments.map(comment => <li key={`${comment._id}`}>{comment.content} - {comment.date.toLocaleString()}</li>)}
+              </ul>
+            }
+          </div>
+        </div>
+        <button onClick={handleDelete}>delete</button>
       </div>
     </div>
   )

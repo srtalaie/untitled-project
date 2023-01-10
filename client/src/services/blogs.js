@@ -41,14 +41,17 @@ const addComment = async (id, comment) => {
   const config = {
     headers: { Authorization: token },
   }
+  const commentObj = {
+    content: comment,
+    date: Date.now()
+  }
   const commentedBlog = await axios.get(`${baseUrl}/${id}`)
   const comments = commentedBlog.data[0].comments
-  comments.push(comment)
+  comments.push(commentObj)
   const blogWithComment = { ...commentedBlog.data[0],
     comments: comments
   }
   const response = await axios.put(`${baseUrl}/${id}`, blogWithComment, config)
-  console.log(response.data)
   return response.data
 }
 

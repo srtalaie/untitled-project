@@ -19,7 +19,13 @@ const blogSchema = new mongoose.Schema({
   },
   comments: [
     {
-      type: String,
+      content: {
+        type: String
+      },
+      date: {
+        type: Date,
+        default: Date.now()
+      }
     },
   ],
   user: {
