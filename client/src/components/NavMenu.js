@@ -7,8 +7,8 @@ const NavMenu = ({ name, handleLogOut }) => {
     <Box>
       <AppBar position="static">
         <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: 'flex-end' }}>
-          <Typography variant="h5" component="div" sx={{ flexGrow: 1 }}>
-            Blooger
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            <Link to="/" style={{ textDecoration: 'none', color: 'white' }} >blooger</Link>
           </Typography>
           <Button><Link to="/" style={{ textDecoration: 'none', color: 'white' }} >blogs</Link></Button>
           <Button><Link to="/users" style={{ textDecoration: 'none', color: 'white' }} >users</Link></Button>
