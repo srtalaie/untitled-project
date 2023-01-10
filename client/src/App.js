@@ -6,6 +6,7 @@ import Blog from './components/Blog'
 import BlogForm from './components/BlogForm'
 import BlogList from './components/BlogList'
 import LoginForm from './components/LoginForm'
+import NavMenu from './components/NavMenu'
 import Notification from './components/Notification'
 import Togglable from './components/Toggable'
 
@@ -56,7 +57,6 @@ const App = () => {
 
   return (
     <div>
-      <h1>Blogger</h1>
       <Notification />
       {user === null ? (
         <Togglable buttonLabel="login">
@@ -64,9 +64,9 @@ const App = () => {
         </Togglable>
       ) : (
         <div>
-          <p>
-            {user.name} logged in <button onClick={handleLogOut}>logout</button>
-          </p>
+          <div>
+            <NavMenu name={user.name} handleLogOut={handleLogOut} />
+          </div>
           <Togglable buttonLabel="new blog" id="new-blog-btn" ref={blogFormRef}>
             <BlogForm />
           </Togglable>
