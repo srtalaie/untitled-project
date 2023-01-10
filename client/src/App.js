@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 
-import { Route, Routes, useNavigate } from 'react-router-dom'
+import { Link, Route, Routes, useNavigate } from 'react-router-dom'
 
 import Blog from './components/Blog'
 import BlogForm from './components/BlogForm'
@@ -59,9 +59,7 @@ const App = () => {
     <div>
       <Notification />
       {user === null ? (
-        <Togglable buttonLabel="login">
-          <LoginForm handleLogin={handleLogin} />
-        </Togglable>
+        <Link to="/login">login</Link>
       ) : (
         <div>
           <div>
@@ -75,6 +73,7 @@ const App = () => {
       <Routes>
         <Route path='/' element={<BlogList />} />
         <Route path='/blogs/:id' element={<Blog />} />
+        <Route path='/login' element={<LoginForm handleLogin={handleLogin} />} />
       </Routes>
     </div>
   )
