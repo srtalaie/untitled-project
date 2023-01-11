@@ -53,6 +53,7 @@ const App = () => {
     window.localStorage.removeItem('loggedInUser')
     setUser(null)
     setToken(null)
+    navigate('/login')
   }
 
   return (
