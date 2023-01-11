@@ -15,15 +15,20 @@ const BlogList = () => {
   return (
     <div>
       <h2>blogs</h2>
-      <div>
-        {blogs.map(blog =>
-          <div key={blog._id} style={blogStyle}>
-            <Link to={`blogs/${blog._id}`}>{blog.title}</Link>
-          </div>
-        )}
+      {blogs === null ? (
+        <h3>No blogs yet</h3>
+      ) : (
         <div>
+          {blogs.map(blog =>
+            <div key={blog._id} style={blogStyle}>
+              <Link to={`blogs/${blog._id}`}>{blog.title}</Link>
+            </div>
+          )}
+          <div>
+          </div>
         </div>
-      </div>
+      )
+      }
     </div>
   )
 }
