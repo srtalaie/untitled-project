@@ -58,7 +58,6 @@ const App = () => {
 
   return (
     <div>
-      <Notification />
       {user === null ? (
         <Link to="/login">login</Link>
       ) : (
@@ -66,6 +65,7 @@ const App = () => {
           <div>
             <NavMenu name={user.name} handleLogOut={handleLogOut} />
           </div>
+          <Notification />
           <Togglable buttonLabel="new blog" id="new-blog-btn" ref={blogFormRef}>
             <BlogForm />
           </Togglable>
