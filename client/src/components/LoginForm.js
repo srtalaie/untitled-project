@@ -1,6 +1,8 @@
-import { useState } from 'react'
-
 import PropTypes from 'prop-types'
+import { useState } from 'react'
+import { Link } from 'react-router-dom'
+
+import { Button } from '@mui/material'
 
 const LoginForm = ({ handleLogin }) => {
   const [username, setUsername] = useState('')
@@ -52,6 +54,9 @@ const LoginForm = ({ handleLogin }) => {
           login
         </button>
       </form>
+      <div>
+        <Button><Link to="/create-user">New User?</Link></Button>
+      </div>
     </div>
   )
 }

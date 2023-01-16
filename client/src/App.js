@@ -10,6 +10,7 @@ import NavMenu from './components/NavMenu'
 import Notification from './components/Notification'
 import Togglable from './components/Toggable'
 import User from './components/User'
+import UserForm from './components/UserForm'
 import UsersTable from './components/UsersTable'
 
 
@@ -82,6 +83,7 @@ const App = () => {
         <Route path="/users" element={<UsersTable />} />
         <Route path="/users/:id" element={<User />} />
         <Route path='/login' element={<LoginForm handleLogin={handleLogin} />} />
+        <Route path='/create-user' element={<UserForm />} />
       </Routes>
     </div>
   )

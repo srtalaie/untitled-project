@@ -11,4 +11,9 @@ const getUser = async (id) => {
   return request.data
 }
 
-export { getAllUsers, getUser }
+const createUser = async (userObj) => {
+  const request = await axios.post(baseUrl, userObj)
+  return request.data
+}
+
+export { getAllUsers, getUser, createUser }
