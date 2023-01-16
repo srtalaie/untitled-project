@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-
+import { useDispatch } from 'react-redux'
 import { Link, Route, Routes, useNavigate } from 'react-router-dom'
 
 import Blog from './components/Blog'
@@ -9,11 +9,15 @@ import LoginForm from './components/LoginForm'
 import NavMenu from './components/NavMenu'
 import Notification from './components/Notification'
 import Togglable from './components/Toggable'
+import User from './components/User'
+import UsersTable from './components/UsersTable'
 
-import { useDispatch } from 'react-redux'
+
 import { initializeBlogs } from './reducers/blogReducer'
+import { initializeUsers } from './reducers/userReducer'
 import { setToken } from './services/blogs'
 import login from './services/login'
+
 
 const App = () => {
   const [user, setUser] = useState(null)
@@ -24,6 +28,7 @@ const App = () => {
 
   useEffect(() => {
     dispatch(initializeBlogs())
+    dispatch(initializeUsers())
   }, [dispatch])
 
   useEffect(() => {
@@ -74,6 +79,8 @@ const App = () => {
       <Routes>
         <Route path='/' element={<BlogList />} />
         <Route path='/blogs/:id' element={<Blog />} />
+        <Route path="/users" element={<UsersTable />} />
+        <Route path="/users/:id" element={<User />} />
         <Route path='/login' element={<LoginForm handleLogin={handleLogin} />} />
       </Routes>
     </div>
