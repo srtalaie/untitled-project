@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
-import { Button } from '@mui/material'
+import { Button, FormControl, Grid, TextField } from '@mui/material'
 
 const LoginForm = ({ handleLogin }) => {
   const [username, setUsername] = useState('')
@@ -27,37 +27,50 @@ const LoginForm = ({ handleLogin }) => {
   }
 
   return (
-    <div>
-      <h2>Login</h2>
-      <form onSubmit={onLogin}>
-        <div>
-          username
-          <input
-            type="text"
-            value={username}
-            name="Username"
-            placeholder="username"
-            onChange={({ target }) => setUsername(target.value)}
-          />
-        </div>
-        <div>
-          password
-          <input
-            type="password"
-            value={password}
-            name="Password"
-            placeholder="password"
-            onChange={({ target }) => setPassword(target.value)}
-          />
-        </div>
-        <button id="login-btn" type="submit">
-          login
-        </button>
-      </form>
-      <div>
-        <Button><Link to="/create-user">New User?</Link></Button>
-      </div>
-    </div>
+    <Grid
+      container
+      spacing={0}
+      direction="column"
+      alignItems="center"
+      justify="center"
+      style={{ minHeight: '80vh' }}
+    >
+      <Grid item direction={'column'}>
+        <h2>Login</h2>
+        <form onSubmit={onLogin}>
+          <Grid item xs={'auto'}>
+            <FormControl margin={'normal'}>
+              <TextField
+                InputLabelProps={{ shrink: true }}
+                required
+                type="text"
+                value={username}
+                name="Username"
+                label="username"
+                onChange={({ target }) => setUsername(target.value)}
+              />
+            </FormControl>
+          </Grid>
+          <Grid item xs={'auto'}>
+            <FormControl margin={'normal'}>
+              <TextField
+                InputLabelProps={{ shrink: true }}
+                required
+                type="password"
+                value={password}
+                name="Password"
+                label="password"
+                onChange={({ target }) => setPassword(target.value)}
+              />
+            </FormControl>
+          </Grid>
+          <Button variant="outlined" id="login-btn" type="submit">login</Button>
+        </form>
+        <Grid item>
+          <Button><Link to="/create-user">New User?</Link></Button>
+        </Grid>
+      </Grid>
+    </Grid>
   )
 }
 
