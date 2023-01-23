@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux'
 import { createABlog } from '../reducers/blogReducer'
 import { setNotification } from '../reducers/notificationReducer'
 
+import { Button, FormControl, Grid, TextField } from '@mui/material'
 
 const BlogForm = () => {
   const [title, setTitle] = useState('')
@@ -34,46 +35,59 @@ const BlogForm = () => {
   }
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <div>
-          title
-          <input
-            type="text"
-            value={title}
-            name="Title"
-            id="title"
-            placeholder="Title"
-            onChange={({ target }) => setTitle(target.value)}
-          />
-        </div>
-        <div>
-          author
-          <input
-            type="text"
-            value={author}
-            name="Author"
-            id="author"
-            placeholder="Author"
-            onChange={({ target }) => setAuthor(target.value)}
-          />
-        </div>
-        <div>
-          url
-          <input
-            type="text"
-            value={url}
-            name="Url"
-            id="url"
-            placeholder="Url"
-            onChange={({ target }) => setUrl(target.value)}
-          />
-        </div>
-        <button id="submit-btn" type="submit">
-          Create
-        </button>
-      </form>
-    </div>
+    <Grid
+      container
+      spacing={0}
+      direction="column"
+      alignItems="center"
+      justify="center"
+      style={{ minHeight: '80vh' }}
+    >
+      <Grid item direction={'column'}>
+        <form onSubmit={handleSubmit}>
+          <Grid item xs={'auto'}>
+            <FormControl margin={'normal'}>
+              <TextField
+                InputLabelProps={{ shrink: true }}
+                required
+                value={title}
+                name="Title"
+                id="title"
+                label="Title"
+                onChange={({ target }) => setTitle(target.value)}
+              />
+            </FormControl>
+          </Grid>
+          <Grid item xs={'auto'}>
+            <FormControl margin={'normal'}>
+              <TextField
+                InputLabelProps={{ shrink: true }}
+                required
+                value={author}
+                name="Author"
+                id="author"
+                label="Author"
+                onChange={({ target }) => setAuthor(target.value)}
+              />
+            </FormControl>
+          </Grid>
+          <Grid item xs={'auto'}>
+            <FormControl margin={'normal'}>
+              <TextField
+                InputLabelProps={{ shrink: true }}
+                required
+                value={url}
+                name="Url"
+                id="url"
+                label="Url"
+                onChange={({ target }) => setUrl(target.value)}
+              />
+            </FormControl>
+          </Grid>
+          <Button variant="outlined" type="submit" id="submit-btn">Create</Button>
+        </form>
+      </Grid>
+    </Grid>
   )
 }
 
