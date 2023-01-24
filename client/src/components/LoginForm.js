@@ -35,7 +35,7 @@ const LoginForm = ({ handleLogin }) => {
       justify="center"
       style={{ minHeight: '80vh' }}
     >
-      <Grid item direction={'column'}>
+      <Grid item>
         <h2>Login</h2>
         <form onSubmit={onLogin}>
           <Grid item xs={'auto'}>

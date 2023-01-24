@@ -43,7 +43,7 @@ const BlogForm = () => {
       justify="center"
       style={{ minHeight: '80vh' }}
     >
-      <Grid item direction={'column'}>
+      <Grid item>
         <form onSubmit={handleSubmit}>
           <Grid item xs={'auto'}>
             <FormControl margin={'normal'}>

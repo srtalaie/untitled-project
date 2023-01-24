@@ -49,7 +49,7 @@ const UserForm = () => {
       justify="center"
       style={{ minHeight: '80vh' }}
     >
-      <Grid item direction={'column'}>
+      <Grid item>
         <h2>New User</h2>
         <form onSubmit={handleSubmit}>
           <Grid item xs={'auto'}>
