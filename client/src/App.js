@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Link, Route, Routes, useNavigate } from 'react-router-dom'
 
+import { Grid } from '@mui/material'
+
 import Blog from './components/Blog'
 import BlogForm from './components/BlogForm'
 import BlogList from './components/BlogList'
@@ -63,19 +65,25 @@ const App = () => {
   }
 
   return (
-    <div>
+    <Grid
+      container
+      maxWidth={'100vw'}
+      maxHeight={'100vh'}
+      disableGutters
+      spacing={0}
+    >
       {user === null ? (
         <Link to="/login">login</Link>
       ) : (
-        <div>
-          <div>
+        <Grid item xs={12}>
+          <Grid item>
             <NavMenu name={user.name} handleLogOut={handleLogOut} />
-          </div>
+          </Grid>
           <Notification />
           <Togglable buttonLabel="new blog" id="new-blog-btn" ref={blogFormRef}>
             <BlogForm />
           </Togglable>
-        </div>
+        </Grid>
       )}
       <Routes>
         <Route path='/' element={<BlogList />} />
@@ -85,7 +93,7 @@ const App = () => {
         <Route path='/login' element={<LoginForm handleLogin={handleLogin} />} />
         <Route path='/create-user' element={<UserForm />} />
       </Routes>
-    </div>
+    </Grid>
   )
 }
 
