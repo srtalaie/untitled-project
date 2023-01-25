@@ -2,6 +2,8 @@ import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 
+import { Button, Grid, TextField, Typography } from '@mui/material'
+
 import { addAComment, deleteABlog, updateABlog } from '../reducers/blogReducer'
 import { setNotification } from '../reducers/notificationReducer'
 
@@ -48,28 +50,37 @@ const Blog = () => {
   }
 
   return (
-    <div className="blog">
-      {blog.title} - {blog.author}
-      <div id="details">
-        <div className="blog-link">
-              link:
-          <a
-            href={`http://${encodeURI(blog.url)}`}
-            target="_blank"
-            rel="noreferrer"
-          >
-            {blog.url}
-          </a>
-        </div>
-        <div className="blog-likes">
-              likes: {blog.likes}
-          <button className="like-btn" onClick={handleLike}>
-                +Like
-          </button>
-        </div>
-        <div>
-          <h3>Comments</h3>
-          <input type="text" name="comment" value={comment} onChange={handleChange}></input>
+    <Grid container className="blog">
+      <Grid
+        container
+        spacing={0}
+        direction="column"
+        alignItems="center"
+        id="details"
+      >
+        <Grid item xs={8}>
+          <Grid item>
+            <Typography sx={{ fontSize: 20 }} color="text.primary">{blog.title} - {blog.author}</Typography>
+          </Grid>
+          <Grid item className="blog-link">
+            <Typography sx={{ fontSize: 14 }} color="text.secondary">link:
+              <a
+                href={`http://${encodeURI(blog.url)}`}
+                target="_blank"
+                rel="noreferrer"
+              >
+                {blog.url}
+              </a>
+            </Typography>
+          </Grid>
+          <Grid item className="blog-likes">
+            <Typography sx={{ fontSize: 14 }} color="text.secondary">likes: {blog.likes}</Typography>
+            <Button className="like-btn" onClick={handleLike}>+Like</Button>
+          </Grid>
+        </Grid>
+        <Grid item xs={4}>
+          <Typography sx={{ fontSize: 20 }} color="text.primary">Comments</Typography>
+          <TextField multiline type="text" name="comment" value={comment} onChange={handleChange}></TextField>
           <button onClick={handleComment}>Add Comment</button>
           <div>
             {blog.comments.length === 0 ?
@@ -82,10 +93,10 @@ const Blog = () => {
               </ul>
             }
           </div>
-        </div>
+        </Grid>
         <button onClick={handleDelete}>delete</button>
-      </div>
-    </div>
+      </Grid>
+    </Grid>
   )
 }
 

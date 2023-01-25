@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Link, Route, Routes, useNavigate } from 'react-router-dom'
 
-import { Grid } from '@mui/material'
+import { Button, Grid } from '@mui/material'
 
 import Blog from './components/Blog'
 import BlogForm from './components/BlogForm'
@@ -69,11 +69,10 @@ const App = () => {
       container
       maxWidth={'100vw'}
       maxHeight={'100vh'}
-      disableGutters
       spacing={0}
     >
       {user === null ? (
-        <Link to="/login">login</Link>
+        <Button><Link to="/login">login</Link></Button>
       ) : (
         <Grid item xs={12}>
           <Grid item>

@@ -45,14 +45,8 @@ const addComment = async (id, comment) => {
     content: comment,
     date: Date.now()
   }
-  const commentedBlog = await axios.get(`${baseUrl}/${id}`)
-  console.log(commentedBlog)
-  const comments = [ ...commentedBlog.data[0].comments ]
-  comments.push(commentObj)
-  const blogWithComment = { ...commentedBlog.data[0],
-    comments: comments
-  }
-  const response = await axios.put(`${baseUrl}/${id}`, blogWithComment, config)
+
+  const response = await axios.put(`${baseUrl}/${id}/comment`, commentObj, config)
   return response.data
 }
 

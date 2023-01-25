@@ -72,6 +72,35 @@ blogRouter.put('/:id', async (request, response) => {
   }
 })
 
+//Comment on a Blog
+blogRouter.put('/:id/comment', async (request, response) => {
+  const { content } = request.body
+
+  const comment = {
+    content,
+    date: Date.now()
+  }
+
+  const decodedToken = jwt.verify(request.token, process.env.SECRET)
+
+  const blogToBeUpdated = await Blog.findById({ _id: request.params.id })
+
+  let commentsSection = [ ...blogToBeUpdated.comments ]
+  commentsSection.push(comment)
+
+  if (decodedToken.id.toString()) {
+    const commentedBlog = await Blog.findOneAndUpdate(
+      { _id: request.params.id },
+      { comments: commentsSection },
+      { new: true, runValidators: true, context: 'query' }
+    )
+    response.json(commentedBlog)
+    response.status(204).end()
+  } else {
+    response.status(401).end()
+  }
+})
+
 //Delete a Blog
 blogRouter.delete('/:id', async (request, response) => {
   const decodedToken = jwt.verify(request.token, process.env.SECRET)
