@@ -101,6 +101,27 @@ blogRouter.put('/:id/comment', async (request, response) => {
   }
 })
 
+//Like a Blog
+blogRouter.put('/:id/like', async (request, response) => {
+  const decodedToken = jwt.verify(request.token, process.env.SECRET)
+
+  const blogToBeUpdated = await Blog.findById({ _id: request.params.id })
+
+  const addedLike = blogToBeUpdated.likes + 1
+
+  if (decodedToken.id.toString()) {
+    const likedBlog = await Blog.findOneAndUpdate(
+      { _id: request.params.id },
+      { likes: addedLike },
+      { new: true, runValidators: true, context: 'query' }
+    )
+    response.json(likedBlog)
+    response.status(204).end()
+  } else {
+    response.status(401).end()
+  }
+})
+
 //Delete a Blog
 blogRouter.delete('/:id', async (request, response) => {
   const decodedToken = jwt.verify(request.token, process.env.SECRET)

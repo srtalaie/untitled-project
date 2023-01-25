@@ -45,9 +45,16 @@ const addComment = async (id, comment) => {
     content: comment,
     date: Date.now()
   }
-
   const response = await axios.put(`${baseUrl}/${id}/comment`, commentObj, config)
   return response.data
 }
 
-export { getAll, setToken, create, update, remove, addComment }
+const likeBlog = async (id) => {
+  const config = {
+    headers: { Authorization: token },
+  }
+  const response = await axios.put(`${baseUrl}/${id}/like`, {}, config)
+  return response.data
+}
+
+export { getAll, setToken, create, update, remove, addComment, likeBlog }

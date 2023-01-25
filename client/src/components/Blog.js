@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom'
 
 import { Button, Grid, TextField, Typography } from '@mui/material'
 
-import { addAComment, deleteABlog, updateABlog } from '../reducers/blogReducer'
+import { addAComment, deleteABlog, likeABlog } from '../reducers/blogReducer'
 import { setNotification } from '../reducers/notificationReducer'
 
 const Blog = () => {
@@ -18,7 +18,7 @@ const Blog = () => {
 
   const handleLike = () => {
     try{
-      dispatch(updateABlog(blog._id, { ...blog, likes: blog.likes + 1 }))
+      dispatch(likeABlog(blog._id, { ...blog, likes: blog.likes + 1 }))
       dispatch(setNotification(`You liked: ${blog.title} by ${blog.author}`, 3000))
     } catch (exception) {
       dispatch(setNotification('Something went wrong'))
