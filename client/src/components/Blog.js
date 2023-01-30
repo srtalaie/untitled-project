@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 
-import { Button, Grid, TextField, Typography } from '@mui/material'
+import { Button, Grid, List, ListItem, TextField, Typography } from '@mui/material'
 
 import { addAComment, deleteABlog, likeABlog } from '../reducers/blogReducer'
 import { setNotification } from '../reducers/notificationReducer'
@@ -77,24 +77,34 @@ const Blog = () => {
             <Typography sx={{ fontSize: 14 }} color="text.secondary">likes: {blog.likes}</Typography>
             <Button className="like-btn" onClick={handleLike}>+Like</Button>
           </Grid>
+          <Grid item className="delete-btn">
+            <Button variant="contained" color='error' size='small' onClick={handleDelete}>delete blog</Button>
+          </Grid>
         </Grid>
         <Grid item xs={4}>
           <Typography sx={{ fontSize: 20 }} color="text.primary">Comments</Typography>
           <TextField multiline type="text" name="comment" value={comment} onChange={handleChange}></TextField>
-          <button onClick={handleComment}>Add Comment</button>
-          <div>
+          <Button onClick={handleComment}>Add Comment</Button>
+          <Grid item>
             {blog.comments.length === 0 ?
-              <div>No comments yet</div> :
-              <ul>
-                {blog.comments.map(comment => <li key={`${comment._id}`}>{comment.content} - {new Date(comment.date).toLocaleString('en-US', {
-                  dateStyle: 'short',
-                  timeStyle: 'short',
-                })}</li>)}
-              </ul>
+              <Grid item>No comments yet</Grid> :
+              <List>
+                {blog.comments.map(comment =>
+                  <Grid item key={`${comment._id}`}>
+                    <ListItem>
+                      <Typography variant='body1'>{comment.content}</Typography>
+                      <Typography variant='caption'>{new Date(comment.date).toLocaleString('en-US', {
+                        dateStyle: 'short',
+                        timeStyle: 'short',
+                      })}</Typography>
+                    </ListItem>
+                    <ListItem divider />
+                  </Grid>
+                )}
+              </List>
             }
-          </div>
+          </Grid>
         </Grid>
-        <button onClick={handleDelete}>delete</button>
       </Grid>
     </Grid>
   )
