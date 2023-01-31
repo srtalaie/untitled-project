@@ -1,5 +1,7 @@
 import { useSelector } from 'react-redux'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
+
+import { Grid, List, ListItem, Typography } from '@mui/material'
 
 const User = () => {
   let { id } = useParams()
@@ -11,15 +13,17 @@ const User = () => {
   }
 
   return (
-    <div>
-      <h2>{user.name}</h2>
-      <h2>Added blogs:</h2>
-      <ul>
+    <Grid container direction={'column'}>
+      <Typography variant='h4'>{user.name}</Typography>
+      <Typography variant='h4'>Added blogs:</Typography>
+      <List>
         {user.blogs.map((blog) => (
-          <li key={blog._id}>{blog.title}</li>
+          <ListItem key={blog._id}>
+            <Typography variant='body1'><Link to={`/blogs/${blog._id}`} style={{ textDecoration: 'none' }}>{blog.title}</Link></Typography>
+          </ListItem>
         ))}
-      </ul>
-    </div>
+      </List>
+    </Grid>
   )
 }
 
