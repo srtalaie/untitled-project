@@ -19,7 +19,7 @@ const UsersTable = () => {
           <TableBody>
             {users.map((user) => (
               <TableRow key={user.id}>
-                <TableCell><Link to={`/users/${user.id}`}>{user.name}</Link></TableCell>
+                <TableCell><Link to={`/users/${user.id}`} style={{ textDecoration: 'none' }}>{user.name}</Link></TableCell>
                 <TableCell>{user.blogs.length}</TableCell>
               </TableRow>
             ))}
