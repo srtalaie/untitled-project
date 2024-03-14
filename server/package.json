@@ -6,7 +6,6 @@
   "scripts": {
     "start": "cross-env NODE_ENV=production node index.js",
     "dev": "cross-env NODE_ENV=development nodemon index.js",
-    "build": "concurrently \"npm start\" \"cd ../client && npm start\"",
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
     "prettier": "npx prettier src test --check",
