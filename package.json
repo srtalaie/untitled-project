@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "concurrently --kill-others-on-fail \"npm run build\" \"npm run client\"",
+    "build": "concurrently --kill-others-on-fail \"npm run client\" \"npm run server\"",
     "server": "cd server && npm start",
-    "client": "cd client && npm start"
+    "client": "cd client && npm run build"
   },
   "author": "",
   "license": "ISC",
