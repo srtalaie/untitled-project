@@ -4,11 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "cross-env NODE_ENV=production node index.js",
-    "client-install": "cd client && npm install",
-    "server-install": "npm install",
-    "install-all-deps": "concurrently \"npm run server-install\" \"npm run client-install\"",
-    "build": "npm run install-all-deps && cd client && npm install && npm run build",
+    "start": "cross-env NODE_ENV=production && npm run build && node index.js",
+    "build": "cd client && npm run build",
     "dev": "cross-env NODE_ENV=development nodemon index.js",
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
