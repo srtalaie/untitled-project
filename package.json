@@ -8,7 +8,7 @@
     "client-install": "cd client && npm install",
     "server-install": "npm install",
     "install-all-deps": "concurrently \"npm run server-install\" \"npm run client-install\"",
-    "build": "npm install-all-deps && cd client && npm install && npm run build",
+    "build": "npm run install-all-deps && cd client && npm install && npm run build",
     "dev": "cross-env NODE_ENV=development nodemon index.js",
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
